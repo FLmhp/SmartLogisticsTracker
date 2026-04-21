@@ -358,6 +358,5 @@ docker compose logs -f api
 
 - `dotnet build .\SmartLogisticsTracker.slnx` 可成功完成
 - `publish.ps1 -Target api` 可成功发布 API
+- `publish.ps1 -Target docker` 可成功构建 `smartlogistics-api:1.0.0`
 - `docker compose config` 校验通过
-
-> 未能完成真实 Docker 镜像构建验证，因为本机 Docker daemon 当时未启动。

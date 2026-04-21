@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.7
 # ============================================================
 #  SmartLogisticsTracker.Api — Dockerfile
 #  - Multi-stage, multi-arch (buildx) friendly
@@ -51,8 +50,8 @@ WORKDIR /app
 
 # Non-root user + data dir
 RUN mkdir -p /app/data \
-    && groupadd -g 1000 app \
-    && useradd  -u 1000 -g app -m -s /usr/sbin/nologin app \
+    && if ! getent group app >/dev/null; then groupadd -g 1000 app; fi \
+    && if ! id -u app >/dev/null 2>&1; then useradd -u 1000 -g app -m -s /usr/sbin/nologin app; fi \
     && chown -R app:app /app
 
 COPY --from=build --chown=app:app /app/publish ./
