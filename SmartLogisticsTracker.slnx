@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SmartLogisticsTracker.Api/SmartLogisticsTracker.Api.csproj" />
+    <Project Path="src/SmartLogisticsTracker.Client/SmartLogisticsTracker.Client.csproj" />
+  </Folder>
+</Solution>

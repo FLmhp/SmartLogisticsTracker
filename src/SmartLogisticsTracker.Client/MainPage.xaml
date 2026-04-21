@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SmartLogisticsTracker.Client.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="SmartLogisticsTracker">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label FontAttributes="Bold" FontSize="24" Text="SmartLogisticsTracker Client" />
+
+            <ActivityIndicator
+                x:Name="BusyIndicator"
+                IsVisible="False"
+                Color="#512BD4" />
+
+            <Label
+                x:Name="StatusLabel"
+                FontSize="14"
+                Text="请先登录。"
+                TextColor="Gray" />
+
+            <Border Padding="12" StrokeThickness="1">
+                <VerticalStackLayout Spacing="8">
+                    <Label FontAttributes="Bold" Text="连接与登录" />
+                    <Entry
+                        x:Name="BaseUrlEntry"
+                        Placeholder="API Base URL (Windows: localhost, Android模拟器: 10.0.2.2)" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <Entry
+                            x:Name="UsernameEntry"
+                            Grid.Column="0"
+                            Placeholder="用户名" />
+                        <Entry
+                            x:Name="PasswordEntry"
+                            Grid.Column="1"
+                            IsPassword="True"
+                            Placeholder="密码" />
+                    </Grid>
+                    <HorizontalStackLayout Spacing="8">
+                        <Button
+                            x:Name="LoginButton"
+                            Clicked="OnLoginClicked"
+                            Text="登录" />
+                        <Button
+                            x:Name="LogoutButton"
+                            Clicked="OnLogoutClicked"
+                            Text="退出登录" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1">
+                <VerticalStackLayout Spacing="8">
+                    <Label FontAttributes="Bold" Text="管理员操作" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Entry
+                            x:Name="WaybillEntry"
+                            Grid.Column="0"
+                            Placeholder="新运单号（例如 WB-2026-0002）" />
+                        <Button
+                            x:Name="CreateShipmentButton"
+                            Grid.Column="1"
+                            Clicked="OnCreateShipmentClicked"
+                            Text="创建运单" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                        <Entry
+                            x:Name="DeviceIdEntry"
+                            Grid.Column="0"
+                            Placeholder="设备号（例如 DEV-1001）" />
+                        <Entry
+                            x:Name="BatteryEntry"
+                            Grid.Column="1"
+                            Keyboard="Numeric"
+                            Placeholder="电量"
+                            WidthRequest="90" />
+                        <Button
+                            x:Name="CreateDeviceButton"
+                            Grid.Column="2"
+                            Clicked="OnCreateDeviceClicked"
+                            Text="创建设备" />
+                    </Grid>
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Button
+                            x:Name="BindButton"
+                            Clicked="OnBindDeviceClicked"
+                            Text="绑定到当前选中运单" />
+                    </HorizontalStackLayout>
+
+                    <Label FontAttributes="Bold" Text="遥测模拟上报（管理员）" />
+                    <Grid ColumnDefinitions="*,*,*,*,*,*" ColumnSpacing="6">
+                        <Entry
+                            x:Name="SeqEntry"
+                            Grid.Column="0"
+                            Keyboard="Numeric"
+                            Placeholder="seq" />
+                        <Entry
+                            x:Name="AxEntry"
+                            Grid.Column="1"
+                            Keyboard="Numeric"
+                            Placeholder="ax" />
+                        <Entry
+                            x:Name="AyEntry"
+                            Grid.Column="2"
+                            Keyboard="Numeric"
+                            Placeholder="ay" />
+                        <Entry
+                            x:Name="AzEntry"
+                            Grid.Column="3"
+                            Keyboard="Numeric"
+                            Placeholder="az" />
+                        <Entry
+                            x:Name="TEntry"
+                            Grid.Column="4"
+                            Keyboard="Numeric"
+                            Placeholder="t" />
+                        <Entry
+                            x:Name="HEntry"
+                            Grid.Column="5"
+                            Keyboard="Numeric"
+                            Placeholder="h" />
+                    </Grid>
+                    <Button
+                        x:Name="IngestTelemetryButton"
+                        Clicked="OnIngestTelemetryClicked"
+                        Text="发送遥测" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label FontAttributes="Bold" Grid.Column="0" Text="运单列表" />
+                        <Button
+                            x:Name="RefreshShipmentsButton"
+                            Grid.Column="1"
+                            Clicked="OnRefreshShipmentsClicked"
+                            Text="刷新" />
+                    </Grid>
+
+                    <Label x:Name="SelectedShipmentLabel" Text="当前未选中运单。" TextColor="Gray" />
+
+                    <CollectionView
+                        x:Name="ShipmentsCollectionView"
+                        HeightRequest="220"
+                        SelectionChanged="OnShipmentSelectionChanged"
+                        SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="8" StrokeThickness="1">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label FontAttributes="Bold" Text="{Binding WaybillNumber}" />
+                                        <Label FontSize="12" Text="{Binding Status}" TextColor="Gray" />
+                                        <Label FontSize="12" Text="{Binding Sender}" />
+                                        <Label FontSize="12" Text="{Binding Receiver}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding CreatedAtUtc, StringFormat='创建时间: {0:yyyy-MM-dd HH:mm:ss}'}"
+                                            TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label FontAttributes="Bold" Grid.Column="0" Text="遥测记录（当前选中运单）" />
+                        <Button
+                            x:Name="RefreshTelemetryButton"
+                            Grid.Column="1"
+                            Clicked="OnRefreshTelemetryClicked"
+                            Text="刷新" />
+                    </Grid>
+
+                    <CollectionView
+                        x:Name="TelemetryCollectionView"
+                        HeightRequest="220"
+                        SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="8" StrokeThickness="1">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            Text="{Binding Seq, StringFormat='seq: {0}'}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding DeviceId, StringFormat='device: {0}'}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding TemperatureC, StringFormat='温度: {0:F2} °C'}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding HumidityRh, StringFormat='湿度: {0:F2} %RH'}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding AccelMagnitudeG, StringFormat='加速度: {0:F2} g'}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding ReceivedAtUtc, StringFormat='接收: {0:yyyy-MM-dd HH:mm:ss}'}"
+                                            TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="12" StrokeThickness="1">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                        <Label FontAttributes="Bold" Grid.Column="0" Text="告警（当前选中运单）" />
+                        <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                            <Label FontSize="12" Text="仅未确认" VerticalOptions="Center" />
+                            <Switch x:Name="UnacknowledgedOnlySwitch" />
+                        </HorizontalStackLayout>
+                        <Button
+                            x:Name="RefreshAlertsButton"
+                            Grid.Column="2"
+                            Clicked="OnRefreshAlertsClicked"
+                            Text="刷新" />
+                    </Grid>
+
+                    <Button
+                        x:Name="AcknowledgeAlertButton"
+                        Clicked="OnAcknowledgeAlertClicked"
+                        Text="确认选中告警" />
+
+                    <CollectionView
+                        x:Name="AlertsCollectionView"
+                        HeightRequest="260"
+                        SelectionChanged="OnAlertSelectionChanged"
+                        SelectionMode="Single">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="8" StrokeThickness="1">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label FontAttributes="Bold" Text="{Binding AlertType}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding Severity, StringFormat='级别: {0}'}" />
+                                        <Label FontSize="12" Text="{Binding Message}" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding IsAcknowledged, StringFormat='已确认: {0}'}"
+                                            TextColor="Gray" />
+                                        <Label
+                                            FontSize="12"
+                                            Text="{Binding CreatedAtUtc, StringFormat='时间: {0:yyyy-MM-dd HH:mm:ss}'}"
+                                            TextColor="Gray" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

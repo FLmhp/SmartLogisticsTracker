@@ -1,0 +1,130 @@
+# ============================================================
+#  SmartLogisticsTracker .gitignore
+# ============================================================
+
+# ---------- .NET build output ----------
+bin/
+obj/
+out/
+publish/
+artifacts/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+build/
+bld/
+[Ll]og/
+[Ll]ogs/
+BenchmarkDotNet.Artifacts/
+
+# ---------- IDE / Editor ----------
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.slnLaunch.user
+*.rsuser
+*.userprefs
+*.sublime-workspace
+
+# ---------- Test / Coverage ----------
+[Tt]est[Rr]esult*/
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+*.trx
+
+# ---------- NuGet ----------
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!packages/build/
+project.lock.json
+project.fragment.lock.json
+
+# ---------- Rider / ReSharper ----------
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# ---------- MAUI / Mobile ----------
+# Android
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+# iOS
+*.ipa
+*.dSYM.zip
+*.dSYM
+# Windows (MSIX/AppX)
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+# MAUI generated
+Platforms/*/obj/
+Platforms/*/bin/
+
+# ---------- Runtime data / Database ----------
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+smartlogistics*.db*
+# Dev-generated SQLite next to the API project
+src/SmartLogisticsTracker.Api/smartlogistics-mvp.db*
+data/
+App_Data/
+
+# ---------- REST client scratch files ----------
+*.http.user
+http-client.env.json
+http-client.private.env.json
+
+# ---------- Secrets / Local config ----------
+appsettings.Local.json
+appsettings.*.Local.json
+secrets.json
+*.pfx
+*.key
+*.pem
+.env
+.env.*
+!.env.example
+
+# ---------- Publish artifacts (zips) ----------
+*.zip
+*.tar.gz
+*.7z
+
+# ---------- OS ----------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# ---------- Session / Planning (local only) ----------
+.copilot/
+.session-state/
+
+# ---------- Misc ----------
+*.log
+*.tmp
+*.bak
+node_modules/

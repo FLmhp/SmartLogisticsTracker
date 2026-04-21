@@ -1,0 +1,62 @@
+# ============================================================
+#  .dockerignore  —  minimize build context for Api image
+#  (build context is the repository root)
+# ============================================================
+
+# VCS
+**/.git/
+**/.gitignore
+**/.gitattributes
+
+# IDE / editor
+**/.vs/
+**/.vscode/
+**/.idea/
+**/*.user
+**/*.suo
+
+# Build output
+**/bin/
+**/obj/
+**/out/
+**/publish/
+**/artifacts/
+**/TestResults/
+
+# Docs / planning (not needed at runtime)
+**/*.md
+**/*.docx
+**/*.pdf
+features.md
+plan.md
+
+# Client project is not built in this image
+src/SmartLogisticsTracker.Client/
+
+# Dev / secrets / local config
+**/appsettings.Local.json
+**/appsettings.*.Local.json
+**/secrets.json
+**/.env
+**/.env.*
+!**/.env.example
+
+# SQLite dev databases (should not be baked into image)
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.sqlite
+**/*.sqlite3
+
+# Misc
+**/*.log
+**/*.tmp
+**/*.bak
+**/node_modules/
+**/Thumbs.db
+**/.DS_Store
+
+# Don't send packaged output back into build
+docker-compose*.yml
+Dockerfile*
+!src/SmartLogisticsTracker.Api/Dockerfile
