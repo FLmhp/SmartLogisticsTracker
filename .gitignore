@@ -88,7 +88,7 @@ Platforms/*/bin/
 smartlogistics*.db*
 # Dev-generated SQLite next to the API project
 src/SmartLogisticsTracker.Api/smartlogistics-mvp.db*
-data/
+/data/
 App_Data/
 
 # ---------- REST client scratch files ----------
